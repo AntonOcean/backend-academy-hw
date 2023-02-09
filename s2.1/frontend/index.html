@@ -1,0 +1,24 @@
+<html>
+<header>
+</header>
+<body>
+    <h2 id="backend">Hello World!</h2>
+</body>
+
+<script>
+function showMessage(json) {
+  let item = document.getElementById("backend");
+  item.textContent=json.message;
+}
+
+fetch('http://127.0.0.1:8000/')
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((json) => showMessage(json))
+  .catch((err) => console.error(`Fetch problem: ${err.message}`));
+</script>
+</html>
