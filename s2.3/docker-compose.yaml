@@ -1,0 +1,6 @@
+services:
+  seminar-3:
+    build: .
+    ports:
+      - 8000:8000
+    restart: on-failure
