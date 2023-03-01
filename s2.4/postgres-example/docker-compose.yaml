@@ -1,0 +1,16 @@
+version: '2.3'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=pwd
+    volumes:
+      - ../postgres_data:/var/lib/postgresql
+  pgadmin4:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_DEFAULT_EMAIL=admin@gmail.com
+    ports:
+      - 5050:80
