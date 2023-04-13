@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+
+  nginx:
+    image: nginx:latest
+#    volumes:
+#     - type: bind
+#       source: ./nginx/nginx.conf
+#       target: /etc/nginx/conf.d/default.conf
+#       read_only: true
+#    volumes:
+#    - "./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro"
+    ports:
+      - 80:80
+      - 443:443
+
+  backend-1:
+    environment:
+      - MY_BACKEND_NAME=my-backend-1
+    build:
+      context: backend
+      dockerfile: Dockerfile
+
+  backend-2:
+    environment:
+      - MY_BACKEND_NAME=my-backend-2
+    build:
+      context: backend
+      dockerfile: Dockerfile
+
+  backend-3:
+    environment:
+      - MY_BACKEND_NAME=BACKUP
+    build:
+      context: backend
+      dockerfile: Dockerfile
