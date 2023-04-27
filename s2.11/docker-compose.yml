@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  dbq-1:
+    image: bitnami/cassandra:latest
+    ports:
+      - '7000:7000'
+      - '9042:9042'
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_SEEDS=dbq-1,dbq-2,dbq-3
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_PASSWORD=cassandra
+    restart: always
+
+  dbq-2:
+    image: bitnami/cassandra:latest
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_SEEDS=dbq-1,dbq-2,dbq-3
+      - CASSANDRA_PASSWORD=cassandra
+    restart: always
+
+  dbq-3:
+    image: bitnami/cassandra:latest
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_SEEDS=dbq-1,dbq-2,dbq-3
+      - CASSANDRA_PASSWORD=cassandra
+    restart: always
