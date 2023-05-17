@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  queue:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 5673:5673
+      - 15672:15672
+    healthcheck:
+      test: [ "CMD-SHELL", "rabbitmqctl status" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend-publisher:
+    environment:
+      - MY_BACKEND_NAME=my-backend-1
+    build:
+      context: consumer
+      dockerfile: Dockerfile
+
+  backend-consumer:
+    environment:
+      - MY_BACKEND_NAME=my-backend-1
+    build:
+      context: publisher
+      dockerfile: Dockerfile
