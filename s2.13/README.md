@@ -10,6 +10,8 @@
 
 * [SDK python](https://github.com/temporalio/sdk-python)
 
+* [Описание Temporal на habr](https://habr.com/ru/companies/oleg-bunin/articles/666158/)
+
 Если вам не хватит ресурсов контейнера, можете увеличить лимиты
 ```buildoutcfg
 colima start --cpu 6 --memory 10
