@@ -1,0 +1,79 @@
+version: '3.7'
+
+services:
+  rabbitmq: # login guest:guest
+    container_name: mq
+    hostname: mq
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "25672:25672"
+      - "15671:15671"
+      - "15672:15672"
+    healthcheck:
+      test: [ "CMD-SHELL", "rabbitmqctl status" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - mq-network
+
+
+  order-db:
+    image: postgres:14
+    container_name: order-db
+    hostname: order-db
+    networks:
+      - order-network
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432
+
+#  order-api:
+#    build:
+#      context: .
+#      dockerfile: order/Dockerfile
+#    container_name: order-api
+#    hostname: order-api
+#    networks:
+#      - order-network
+#      - mq-network
+#    ports:
+#      - 8000:8000
+#    depends_on:
+#      - order-db
+#      - rabbitmq
+
+#  stock-cron:
+#    build:
+#      context: .
+#      dockerfile: stock/Dockerfile
+#    restart: on-failure
+#    depends_on:
+#      - rabbitmq
+#    networks:
+#      - order-network
+#      - mq-network
+#
+#  delivery-cron:
+#    build:
+#      context: .
+#      dockerfile: delivery/Dockerfile
+#    restart: on-failure
+#    depends_on:
+#      - rabbitmq
+#    networks:
+#      - order-network
+#      - mq-network
+
+networks:
+  order-network:
+    driver: local
+  mq-network:
+    driver: local
